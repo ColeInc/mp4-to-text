@@ -1,4 +1,6 @@
 import os
+import pyperclip
+from datetime import datetime
 from dotenv import load_dotenv
 import moviepy.editor as mp
 import speech_recognition as sr
@@ -25,22 +27,7 @@ def get_filenames_from_directory():
     return filenames
 
 
-def get_full_filename(filename):
-    # print("getting full filename...")
-    # # Split the filename into its root and extension parts
-    # root, extension = os.path.splitext(filename)
-
-    # # Check if there are multiple dots in the filename
-    # if extension and "." in root:
-    #     # Split the root part using the last dot
-    #     root_parts = root.split(".")
-    #     root = ".".join(root_parts[:-1])
-
-    # # Combine the root and extension to get the full filename
-    # full_filename = root + extension
-    # print("full_filename:", full_filename)
-    # return full_filename
-    
+def get_full_filename(filename):    
     # Split the filename based on the last dot (.).
   split_filename = filename.rsplit('.', 1)
 
@@ -162,6 +149,12 @@ def delete_files_by_basename(filename):
     return deleted_files
 
 
+def copy_text_to_clipboard(text):    
+    # Copy the text to clipboard
+    pyperclip.copy(text)
+    print("Text copied to your clipboard!")
+
+
 def main():
     print("Starting...")
     
@@ -181,7 +174,9 @@ def main():
         write_text_to_file(file_name, formatted_text)
         # once successfully written, delete mp4 files from IN and STAGING dirs:
         delete_files_by_basename(file_name)
-        # delete_files_by_basename("test copy")
+        # copy text to user's clipboard
+        copy_text_to_clipboard(formatted_text)
+        
     print("Complete! ✅")
     
 main()
