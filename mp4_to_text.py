@@ -125,15 +125,16 @@ def write_text_to_file(file_name, text):
     if not os.path.exists(out_directory):
         os.makedirs(out_directory)
 
-    # Construct the output file path
-    output_file_path = os.path.join(out_directory, file_name + ".txt")
+    # Get the current date in the format: YYYY.MM.DD
+    current_date = datetime.now().strftime("%Y.%m.%d")
 
-    # Check if the file already exists
+    # Construct the output file path with the current date appended
+    output_file_path = os.path.join(out_directory, f"{current_date} - {file_name}.txt")
+
+    # Check if the file already exists. if so, append "_2" to the file name
     file_exists = os.path.exists(output_file_path)
-
-    # If the file exists, append "_2" to the file name
     if file_exists:
-        output_file_path = os.path.join(out_directory, file_name + "_2.txt")
+        output_file_path = os.path.join(out_directory, f"{current_date} - {file_name}_2.txt")
 
     # Write the text to the output file
     with open(output_file_path, "w") as file:
